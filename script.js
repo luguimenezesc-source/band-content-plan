@@ -117,7 +117,7 @@ if (planGrid) {
       }
     });
   }, { threshold: 0.1 });
-  planGrid.observe(planGrid);
+  planObserver.observe(planGrid);
 }
 
 // ============================================
