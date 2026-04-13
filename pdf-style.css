@@ -183,3 +183,42 @@ p { font-size: 1rem; color: rgba(240,238,232,0.8); line-height: 1.6; }
 .footer-contact h3 { color: var(--clr-accent); font-size: 1.4rem; font-weight: 600; margin-bottom: 8px; }
 .footer-contact p { font-size: 0.95rem; margin-bottom: 4px; }
 .footer-contact strong { color: #fff; font-weight: 600; }
+
+/* Top Bar & Extra Title Styles */
+.top-bar {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 60px;
+}
+
+.extra-title {
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--clr-accent);
+  border-left: 2px solid var(--clr-accent);
+  padding-left: 12px;
+  line-height: 1;
+}
+
+.top-link, .header-link {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+
+.header-link {
+  color: var(--clr-text-muted);
+}
+

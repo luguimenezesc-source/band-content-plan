@@ -66,7 +66,7 @@ if (hero) heroObserver.observe(hero);
 // Scroll Reveal Animations
 // ============================================
 const revealEls = document.querySelectorAll(
-  '.pain__grid, .solution__card, .plan-card, .gallery__item, .why__inner, .faq__item, .final-cta__content, .solution__header, .gallery__col'
+  '.pain__grid, .solution__card, .plan-card, .why__inner, .faq__item, .final-cta__content, .solution__header'
 );
 
 revealEls.forEach(el => el.classList.add('reveal'));
@@ -84,24 +84,58 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 revealEls.forEach(el => revealObserver.observe(el));
 
-// Staggered children animation for gallery cols
-const galleryCols = document.querySelectorAll('.gallery__col');
-galleryCols.forEach((col, colIndex) => {
-  const items = col.querySelectorAll('.gallery__item');
-  const colObserver = new IntersectionObserver((entries) => {
+// Staggered children animation for gallery items
+const galleryContainer = document.querySelector('.gallery__masonry');
+if (galleryContainer) {
+  const items = galleryContainer.querySelectorAll('.gallery__item');
+  items.forEach(item => item.classList.add('reveal')); // Add reveal class manually
+
+  const galleryObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         items.forEach((item, i) => {
           setTimeout(() => {
             item.classList.add('visible');
-          }, colIndex * 100 + i * 80);
+          }, i * 60);
         });
-        colObserver.unobserve(entry.target);
+        galleryObserver.unobserve(entry.target);
       }
     });
   }, { threshold: 0.05 });
-  colObserver.observe(col);
-});
+  galleryObserver.observe(galleryContainer);
+}
+
+// ============================================
+// Lightbox Implementation
+// ============================================
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxClose = document.getElementById('lightbox-close');
+
+if (lightbox && lightboxImg && lightboxClose) {
+  const galleryItems = document.querySelectorAll('.gallery__item');
+  
+  galleryItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const img = item.querySelector('img');
+      if (img) {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt || 'Enlarged photo';
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      }
+    });
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    // Close on click outside image or on close button
+    if (e.target === lightbox || e.target === lightboxClose) {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = ''; // Restore scrolling
+      setTimeout(() => { lightboxImg.src = ''; }, 400); // Clear memory after transition
+    }
+  });
+}
 
 // Staggered plan cards
 const planGrid = document.querySelector('.plans__grid');
